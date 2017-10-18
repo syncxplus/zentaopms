@@ -601,6 +601,14 @@ class baseHelper
      */
     public static function getRemoteIp()
     {
+        if(function_exists('getenv')) {
+            if(getenv('Http_X_Forwarded_For')) {
+                return getenv('Http_X_Forwarded_For');
+            } else if(getenv('Http_X_Real_IP')) {
+                return getenv('Http_X_Real_IP');
+            }
+        }
+
         $ip = '';
         if(!empty($_SERVER["REMOTE_ADDR"]))          $ip = $_SERVER["REMOTE_ADDR"];
         if(!empty($_SERVER["HTTP_X_FORWARDED_FOR"])) $ip = $_SERVER["HTTP_X_FORWARDED_FOR"];

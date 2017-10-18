@@ -2496,6 +2496,7 @@ class super
         }
         elseif($this->scope == 'server')
         {
+            if(strcasecmp($key, 'remote_addr') == 0) return helper::getRemoteIp();
             if($key == 'ajax') return isset($_SERVER['HTTP_X_REQUESTED_WITH']) ? true : false;
             if(isset($_SERVER[$key])) return $_SERVER[$key];
             $key = strtoupper($key);
