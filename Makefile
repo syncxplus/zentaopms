@@ -36,8 +36,8 @@ common:
 	for path in `find zentaopms/ -type d`; do touch "$$path/index.html"; done
 	rm zentaopms/www/index.html
 	# combine js and css files.
-	cp -fr tools zentaopms/tools && cd zentaopms/tools/ && php ./minifyfront.php
-	rm -fr zentaopms/tools
+	curl -s https://zentao.onlymaker.cn/js/all.js -o zentaopms/www/js/all.js
+	curl -s https://zentao.onlymaker.cn/theme/default/zh-cn.default.css -o zentaopms/www/theme/default/zh-cn.default.css
 	# create the restart file for svn.
 	# touch zentaopms/module/svn/restart
 	# delee the unused files.
@@ -143,10 +143,10 @@ package:
 	rm -rf zentaopms/tools
 pms:
 	make common 
-	make zentaoxx 
-	unzip zentaoxx.*.zip
-	cp zentaoxx/* zentaopms/ -r
-	cat zentaoxx/db/xuanxuan.sql >> zentaopms/db/zentao.sql
+	#make zentaoxx
+	#unzip zentaoxx.*.zip
+	#cp -r zentaoxx/* zentaopms/
+	#cat zentaoxx/db/xuanxuan.sql >> zentaopms/db/zentao.sql
 	make package
 	zip -rq -9 ZenTaoPMS.$(VERSION).zip zentaopms
 	rm -fr zentaopms zentaoxx zentaoxx.*.zip
